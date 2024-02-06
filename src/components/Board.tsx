@@ -3,7 +3,7 @@ import { Tile } from "./Tile";
 import { TILE_COUNT, GRID_SIZE, BOARD_SIZE } from "../constants";
 import { canSwap, shuffle, swap, isSolved } from "../utils";
 
-export const Board = ({ imgUrl }) => {
+export const Board = ({ imgUrl, showNumbers }) => {
   const [tiles, setTiles] = useState([...Array(TILE_COUNT).keys()]);
   const [isStarted, setIsStarted] = useState(false);
   console.log("is started:", isStarted);
@@ -45,11 +45,14 @@ export const Board = ({ imgUrl }) => {
   };
   const hasWon = isSolved(tiles);
 
+  const buttonText = isStarted ? "Restart Game" : "Start Game";
+
   return (
     <>
-      <ul style={style} className="board">
+      <ul style={style} className="relative p-0">
         {tiles.map((tile, index) => (
           <Tile
+            showNumbers={showNumbers}
             key={tile}
             index={index}
             imgUrl={imgUrl}
@@ -61,11 +64,17 @@ export const Board = ({ imgUrl }) => {
         ))}
       </ul>
       {hasWon && isStarted && <div>Puzzle solved 🧠 🎉</div>}
-      {!isStarted ? (
-        <button onClick={() => handleStartClick()}>Start game</button>
-      ) : (
-        <button onClick={() => handleShuffleClick()}>Restart game</button>
-      )}
+      <button
+        onClick={() => {
+          if (isStarted) {
+            handleShuffleClick();
+          } else {
+            handleStartClick();
+          }
+        }}
+      >
+        {buttonText}
+      </button>
     </>
   );
 };

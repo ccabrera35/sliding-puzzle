@@ -1,10 +1,17 @@
 import { Motion, spring } from "react-motion";
 import { getMatrixPosition, getVisualPosition } from "../utils";
 import { TILE_COUNT, GRID_SIZE, BOARD_SIZE } from "../constants";
+import { FC } from "react";
 
-export const Tile = (props) => {
-  const { tile, index, width, height, handleTileClick, imgUrl } = props;
-  console.log("img in tile", imgUrl);
+export const Tile: FC<any> = ({
+  handleTileClick,
+  height,
+  imgUrl,
+  index,
+  showNumbers,
+  tile,
+  width,
+}) => {
   const { row, col } = getMatrixPosition(index);
   const visualPos = getVisualPosition(row, col, width, height);
   const tileStyle = {
@@ -33,10 +40,10 @@ export const Tile = (props) => {
             // Is last tile?
             opacity: tile === TILE_COUNT - 1 ? 0 : 1,
           }}
-          className="tile"
+          className="absolute list-none bg-teal-400 grid place-items-center text-xl"
           onClick={() => handleTileClick(index)}
         >
-          {!imgUrl && `${tile + 1}`}
+          {showNumbers && tile + 1}
         </li>
       )}
     </Motion>
