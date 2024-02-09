@@ -21,12 +21,12 @@ export function isSolved(tiles) {
 }
 
 // Get the linear index from a row/col pair.
-export function getIndex(row, col) {
+export function getIndex(row: string, col: string) {
   return parseInt(row, 10) * GRID_SIZE + parseInt(col, 10);
 }
 
 // Get the row/col pair from a linear index.
-export function getMatrixPosition(index) {
+export function getMatrixPosition(index: number) {
   return {
     row: Math.floor(index / GRID_SIZE),
     col: index % GRID_SIZE,

@@ -1,19 +1,23 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Tile } from "./Tile";
 import { TILE_COUNT, GRID_SIZE, BOARD_SIZE } from "../constants";
 import { canSwap, shuffle, swap, isSolved } from "../utils";
 
-export const Board = ({ imgUrl, showNumbers }) => {
+type BoardProps = {
+  imgUrl: string;
+  showNumbers?: boolean;
+};
+
+export const Board: FC<BoardProps> = ({ imgUrl, showNumbers }) => {
   const [tiles, setTiles] = useState([...Array(TILE_COUNT).keys()]);
   const [isStarted, setIsStarted] = useState(false);
-  console.log("is started:", isStarted);
 
   const shuffleTiles = () => {
     const shuffledTiles = shuffle(tiles);
     setTiles(shuffledTiles);
   };
 
-  const swapTiles = (tileIndex) => {
+  const swapTiles = (tileIndex: number) => {
     if (canSwap(tileIndex, tiles.indexOf(tiles.length - 1))) {
       const swappedTiles = swap(
         tiles,
@@ -24,7 +28,7 @@ export const Board = ({ imgUrl, showNumbers }) => {
     }
   };
 
-  const handleTileClick = (index) => {
+  const handleTileClick = (index: number) => {
     swapTiles(index);
   };
 

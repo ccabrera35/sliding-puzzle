@@ -1,9 +1,19 @@
-import { Motion, spring } from "react-motion";
+import { FC } from "react";
+import { motion } from "framer-motion";
 import { getMatrixPosition, getVisualPosition } from "../utils";
 import { TILE_COUNT, GRID_SIZE, BOARD_SIZE } from "../constants";
-import { FC } from "react";
 
-export const Tile: FC<any> = ({
+type TileProps = {
+  handleTileClick: (index: number) => void;
+  height: number;
+  imgUrl: string;
+  index: number;
+  showNumbers?: boolean;
+  tile: number;
+  width: number;
+};
+
+export const Tile: FC<TileProps> = ({
   handleTileClick,
   height,
   imgUrl,
@@ -17,35 +27,29 @@ export const Tile: FC<any> = ({
   const tileStyle = {
     width: `calc(100% / ${GRID_SIZE})`,
     height: `calc(100% / ${GRID_SIZE})`,
-    translateX: visualPos.x,
-    translateY: visualPos.y,
     backgroundImage: `url(${imgUrl})`,
     backgroundSize: `${BOARD_SIZE}px`,
     backgroundPosition: `${(100 / (GRID_SIZE - 1)) * (tile % GRID_SIZE)}% ${
       (100 / (GRID_SIZE - 1)) * Math.floor(tile / GRID_SIZE)
     }%`,
   };
-  const motionStyle = {
-    translateX: spring(visualPos.x),
-    translateY: spring(visualPos.y),
-  };
 
-  return (
-    <Motion style={motionStyle}>
-      {({ translateX, translateY }) => (
-        <li
-          style={{
-            ...tileStyle,
-            transform: `translate3d(${translateX}px, ${translateY}px, 0)`,
-            // Is last tile?
-            opacity: tile === TILE_COUNT - 1 ? 0 : 1,
-          }}
-          className="absolute list-none bg-teal-400 grid place-items-center text-xl"
-          onClick={() => handleTileClick(index)}
-        >
-          {showNumbers && tile + 1}
-        </li>
-      )}
-    </Motion>
-  );
+  if (true) {
+    return (
+      <motion.li
+        className="absolute list-none bg-teal-400 grid place-items-center text-xl cursor-pointer"
+        style={tileStyle}
+        initial={{ x: 0, y: 0, opacity: 1 }}
+        animate={{
+          x: visualPos.x,
+          y: visualPos.y,
+          opacity: tile === TILE_COUNT - 1 ? 0 : 1,
+        }}
+        transition={{ duration: 0.2 }}
+        onClick={() => handleTileClick(index)}
+      >
+        {showNumbers && tile + 1}
+      </motion.li>
+    );
+  }
 };
