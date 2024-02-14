@@ -5,7 +5,7 @@ import { usePersistedState } from "./hooks";
 
 export const App = () => {
   const [imgUrl, setImgUrl] = useState("");
-  const [showNumbers, setShowNumbers] = usePersistedState("showNumbers", false);
+  const [showNumbers, setShowNumbers] = usePersistedState("showNumbers", true);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
