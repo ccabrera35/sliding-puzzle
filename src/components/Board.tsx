@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Tile } from "./Tile";
-import { GRID_SIZE, BOARD_SIZE } from "../constants";
+import { BOARD_SIZE } from "../constants";
 import { canSwap, shuffle, swap, isSolved } from "../utils";
 import { useGame } from "../hooks/useGameConfig";
 
@@ -15,6 +15,7 @@ export const Board: FC<BoardProps> = ({ imgUrl }) => {
 
   useEffect(() => {
     setTiles([...Array(size * size).keys()]);
+    setIsStarted(false);
   }, [size]);
 
   const shuffleTiles = () => {
@@ -34,9 +35,9 @@ export const Board: FC<BoardProps> = ({ imgUrl }) => {
   };
 
   const handleTileClick = (index: number) => {
-    // if (isStarted) {
-    swapTiles(index);
-    // }
+    if (isStarted) {
+      swapTiles(index);
+    }
   };
 
   const handleShuffleClick = () => {
