@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { motion } from "framer-motion";
 import { getMatrixPosition, getVisualPosition } from "../utils";
-import { TILE_COUNT, GRID_SIZE, BOARD_SIZE } from "../constants";
+import { BOARD_SIZE } from "../constants";
 import clsx from "clsx";
+import { useGame } from "../hooks/useGameConfig";
 
 type TileProps = {
   className?: string;
@@ -25,29 +26,32 @@ export const Tile: FC<TileProps> = ({
   tile,
   width,
 }) => {
-  const { row, col } = getMatrixPosition(index);
+  const { size } = useGame();
+  const tileCount = size * size;
+  const { row, col } = getMatrixPosition(index, size);
   const visualPos = getVisualPosition(row, col, width, height);
   const tileStyle = {
-    width: `calc(100% / ${GRID_SIZE})`,
-    height: `calc(100% / ${GRID_SIZE})`,
+    width: `calc(100% / ${size})`,
+    height: `calc(100% / ${size})`,
     backgroundImage: `url(${imgUrl})`,
     backgroundSize: `${BOARD_SIZE}px`,
-    backgroundPosition: `${(100 / (GRID_SIZE - 1)) * (tile % GRID_SIZE)}% ${
-      (100 / (GRID_SIZE - 1)) * Math.floor(tile / GRID_SIZE)
+    backgroundPosition: `${(100 / (size - 1)) * (tile % size)}% ${
+      (100 / (size - 1)) * Math.floor(tile / size)
     }%`,
   };
 
   return (
     <motion.li
       className={clsx(
-        "grid absolute place-items-center text-xl list-none bg-teal-400", className
+        "grid absolute place-items-center text-xl list-none bg-teal-400",
+        className
       )}
       style={tileStyle}
       initial={{ x: 0, y: 0, opacity: 1 }}
       animate={{
         x: visualPos.x,
         y: visualPos.y,
-        opacity: tile === TILE_COUNT - 1 ? 0 : 1,
+        opacity: tile === tileCount - 1 ? 0 : 1,
       }}
       transition={{ duration: 0.2 }}
       onClick={() => handleTileClick(index)}

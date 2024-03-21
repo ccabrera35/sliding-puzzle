@@ -1,16 +1,21 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Tile } from "./Tile";
-import { TILE_COUNT, GRID_SIZE, BOARD_SIZE } from "../constants";
+import { GRID_SIZE, BOARD_SIZE } from "../constants";
 import { canSwap, shuffle, swap, isSolved } from "../utils";
+import { useGame } from "../hooks/useGameConfig";
 
 type BoardProps = {
   imgUrl: string;
-  showNumbers?: boolean;
 };
 
-export const Board: FC<BoardProps> = ({ imgUrl, showNumbers }) => {
-  const [tiles, setTiles] = useState([...Array(TILE_COUNT).keys()]);
+export const Board: FC<BoardProps> = ({ imgUrl }) => {
+  const { showNumbers, size } = useGame();
+  const [tiles, setTiles] = useState([...Array(size * size).keys()]);
   const [isStarted, setIsStarted] = useState(false);
+
+  useEffect(() => {
+    setTiles([...Array(size * size).keys()]);
+  }, [size]);
 
   const shuffleTiles = () => {
     const shuffledTiles = shuffle(tiles);
@@ -18,7 +23,7 @@ export const Board: FC<BoardProps> = ({ imgUrl, showNumbers }) => {
   };
 
   const swapTiles = (tileIndex: number) => {
-    if (canSwap(tileIndex, tiles.indexOf(tiles.length - 1))) {
+    if (canSwap(tileIndex, tiles.indexOf(tiles.length - 1), size)) {
       const swappedTiles = swap(
         tiles,
         tileIndex,
@@ -29,9 +34,9 @@ export const Board: FC<BoardProps> = ({ imgUrl, showNumbers }) => {
   };
 
   const handleTileClick = (index: number) => {
-    if (isStarted) {
-      swapTiles(index);
-    }
+    // if (isStarted) {
+    swapTiles(index);
+    // }
   };
 
   const handleShuffleClick = () => {
@@ -43,8 +48,8 @@ export const Board: FC<BoardProps> = ({ imgUrl, showNumbers }) => {
     setIsStarted(true);
   };
 
-  const pieceWidth = Math.round(BOARD_SIZE / GRID_SIZE);
-  const pieceHeight = Math.round(BOARD_SIZE / GRID_SIZE);
+  const pieceWidth = Math.round(BOARD_SIZE / size);
+  const pieceHeight = Math.round(BOARD_SIZE / size);
   const style = {
     width: BOARD_SIZE,
     height: BOARD_SIZE,

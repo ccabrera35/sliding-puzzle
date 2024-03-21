@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { Board } from "./components/Board";
 import { updateURLParameter } from "./utils";
-import { usePersistedState } from "./hooks";
+import { Nav } from "./components/Nav";
 
 export const App = () => {
   const [imgUrl, setImgUrl] = useState("");
-  const [showNumbers, setShowNumbers] = usePersistedState("showNumbers", true);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -24,26 +23,19 @@ export const App = () => {
   };
 
   return (
-    <div className="grid place-items-center h-[100vh]">
-      <h1 className="m-0">React sliding puzzle</h1>
-      <Board showNumbers={showNumbers} imgUrl={imgUrl} />
-      <label htmlFor="image">Custom image</label>
-      <input
-        name="image"
-        className="rounded border border-black"
-        value={imgUrl}
-        onChange={handleImageChange}
-      />
-      <label htmlFor="show-numbers">Display numbers?</label>
-      <input
-        name="show-numbers"
-        defaultChecked={showNumbers}
-        onChange={(e) => {
-          console.log("e", e.target.checked);
-          setShowNumbers(e.target.checked);
-        }}
-        type="checkbox"
-      />
-    </div>
+    <>
+      <Nav />
+      <div className="grid place-items-center h-screen">
+        <h1 className="m-0">Sliding puzzle</h1>
+        <Board imgUrl={imgUrl} />
+        <label htmlFor="image">Custom image</label>
+        <input
+          name="image"
+          className="rounded border border-black"
+          value={imgUrl}
+          onChange={handleImageChange}
+        />
+      </div>
+    </>
   );
 };
