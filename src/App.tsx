@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Board } from "./components/Board";
-import { updateURLParameter } from "./utils";
+import { formatTime, updateURLParameter } from "./utils";
 import { Nav } from "./components/Nav";
+import { useGame } from "./hooks/useGameConfig";
 
 export const App = () => {
   const [imgUrl, setImgUrl] = useState("");
@@ -27,6 +28,7 @@ export const App = () => {
       <Nav />
       <div className="grid place-items-center h-screen">
         <h1 className="m-0">Sliding puzzle</h1>
+        <p className="m-0">Time Elapsed - {formatTime(useGame().seconds)}</p>
         <Board imgUrl={imgUrl} />
         <label htmlFor="image">Custom image</label>
         <input

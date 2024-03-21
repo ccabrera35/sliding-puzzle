@@ -9,14 +9,27 @@ type BoardProps = {
 };
 
 export const Board: FC<BoardProps> = ({ imgUrl }) => {
-  const { showNumbers, size } = useGame();
+  const { showNumbers, size, setSeconds } = useGame();
   const [tiles, setTiles] = useState([...Array(size * size).keys()]);
   const [isStarted, setIsStarted] = useState(false);
+  const hasWon = isSolved(tiles);
 
   useEffect(() => {
     setTiles([...Array(size * size).keys()]);
     setIsStarted(false);
-  }, [size]);
+    setSeconds(0);
+  }, [size]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (isStarted && !hasWon) {
+        setSeconds((prevSeconds) => prevSeconds + 1);
+      }
+    }, 1000);
+
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [isStarted, hasWon]);
 
   const shuffleTiles = () => {
     const shuffledTiles = shuffle(tiles);
@@ -42,6 +55,7 @@ export const Board: FC<BoardProps> = ({ imgUrl }) => {
 
   const handleShuffleClick = () => {
     shuffleTiles();
+    setSeconds(0);
   };
 
   const handleStartClick = () => {
@@ -55,7 +69,6 @@ export const Board: FC<BoardProps> = ({ imgUrl }) => {
     width: BOARD_SIZE,
     height: BOARD_SIZE,
   };
-  const hasWon = isSolved(tiles);
 
   const buttonText = isStarted ? "Restart Game" : "Start Game";
 
