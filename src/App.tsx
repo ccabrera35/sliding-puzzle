@@ -30,7 +30,7 @@ export const App = () => {
       <label htmlFor="image">Custom image</label>
       <input
         name="image"
-        className="border border-black rounded"
+        className="rounded border border-black"
         value={imgUrl}
         onChange={handleImageChange}
       />

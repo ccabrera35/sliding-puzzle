@@ -2,8 +2,10 @@ import { FC } from "react";
 import { motion } from "framer-motion";
 import { getMatrixPosition, getVisualPosition } from "../utils";
 import { TILE_COUNT, GRID_SIZE, BOARD_SIZE } from "../constants";
+import clsx from "clsx";
 
 type TileProps = {
+  className?: string;
   handleTileClick: (index: number) => void;
   height: number;
   imgUrl: string;
@@ -14,6 +16,7 @@ type TileProps = {
 };
 
 export const Tile: FC<TileProps> = ({
+  className,
   handleTileClick,
   height,
   imgUrl,
@@ -34,22 +37,22 @@ export const Tile: FC<TileProps> = ({
     }%`,
   };
 
-  if (true) {
-    return (
-      <motion.li
-        className="absolute list-none bg-teal-400 grid place-items-center text-xl cursor-pointer"
-        style={tileStyle}
-        initial={{ x: 0, y: 0, opacity: 1 }}
-        animate={{
-          x: visualPos.x,
-          y: visualPos.y,
-          opacity: tile === TILE_COUNT - 1 ? 0 : 1,
-        }}
-        transition={{ duration: 0.2 }}
-        onClick={() => handleTileClick(index)}
-      >
-        {showNumbers && tile + 1}
-      </motion.li>
-    );
-  }
+  return (
+    <motion.li
+      className={clsx(
+        "grid absolute place-items-center text-xl list-none bg-teal-400", className
+      )}
+      style={tileStyle}
+      initial={{ x: 0, y: 0, opacity: 1 }}
+      animate={{
+        x: visualPos.x,
+        y: visualPos.y,
+        opacity: tile === TILE_COUNT - 1 ? 0 : 1,
+      }}
+      transition={{ duration: 0.2 }}
+      onClick={() => handleTileClick(index)}
+    >
+      {showNumbers && tile + 1}
+    </motion.li>
+  );
 };

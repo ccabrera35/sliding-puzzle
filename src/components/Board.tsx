@@ -29,7 +29,9 @@ export const Board: FC<BoardProps> = ({ imgUrl, showNumbers }) => {
   };
 
   const handleTileClick = (index: number) => {
-    swapTiles(index);
+    if (isStarted) {
+      swapTiles(index);
+    }
   };
 
   const handleShuffleClick = () => {
@@ -56,14 +58,15 @@ export const Board: FC<BoardProps> = ({ imgUrl, showNumbers }) => {
       <ul style={style} className="relative p-0">
         {tiles.map((tile, index) => (
           <Tile
-            showNumbers={showNumbers}
-            key={tile}
-            index={index}
+            className={isStarted ? "cursor-pointer" : "cursor-not-allowed"}
+            handleTileClick={handleTileClick}
+            height={pieceHeight}
             imgUrl={imgUrl}
+            index={index}
+            key={tile}
+            showNumbers={showNumbers}
             tile={tile}
             width={pieceWidth}
-            height={pieceHeight}
-            handleTileClick={handleTileClick}
           />
         ))}
       </ul>
