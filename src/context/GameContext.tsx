@@ -25,16 +25,14 @@ export const GameConfig = createContext<GameConfigType>({
   setSize: () => {},
   seconds: 0,
   setSeconds: () => {},
-  possibleSizes: [3, 4, 5, 6, 7]
+  possibleSizes: [3, 4, 5, 6, 7],
 });
 
-export const GameProvider: FC<PropsWithChildren> = (
-  { children },
-) => {
+export const GameProvider: FC<PropsWithChildren> = ({ children }) => {
   const [showNumbers, setShowNumbers] = usePersistedState("showNumbers", true);
   const [size, setSize] = useState(3);
   const [seconds, setSeconds] = useState(0);
-  const possibleSizes = [3, 4, 5, 6, 7]
+  const possibleSizes = [3, 4, 5, 6, 7];
 
   return (
     <GameConfig.Provider

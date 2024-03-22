@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import { Tile } from "./Tile";
 import { BOARD_SIZE } from "../constants";
-import { canSwap, shuffle, swap, isSolved } from "../utils";
+import { canSwap, shuffle, swap, isSolved, getRandomImage } from "../utils";
 import { useGame } from "../hooks/useGameConfig";
-import { randomImages } from "../lib/constants";
+import clsx from "clsx";
 
 type BoardProps = {
   imgUrl: string;
@@ -72,11 +72,10 @@ export const Board: FC<BoardProps> = ({ imgUrl, onChangeImg }) => {
   };
 
   const handleGenerateImgClick = () => {
-    const randomImgUrl =
-      randomImages[Math.floor(Math.random() * randomImages.length)];
+    const randomImgUrl = getRandomImage(imgUrl);
     onChangeImg(randomImgUrl);
     setSeconds(0);
-    shuffleTiles();
+    setTiles([...Array(size * size).keys()]);
     setIsStarted(false);
     setIsPaused(false);
   };
@@ -97,10 +96,10 @@ export const Board: FC<BoardProps> = ({ imgUrl, onChangeImg }) => {
         <ul style={style} className="relative p-0 bg-cover bg-light-salmon">
           {tiles.map((tile, index) => (
             <Tile
-              className={`${
+              className={clsx(
                 isStarted && !isPaused ? "cursor-pointer" : "cursor-not-allowed"
-              }`}
-              handleTileClick={handleTileClick}
+              )}
+              onClick={handleTileClick}
               height={pieceHeight}
               imgUrl={imgUrl}
               index={index}

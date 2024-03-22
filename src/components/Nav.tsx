@@ -4,8 +4,8 @@ import { Button } from "./Button";
 import { motion } from "framer-motion";
 
 const containerVariants = {
-  open: { opacity: 1, y: "0" },
-  closed: { opacity: 0, y: "-100%" },
+  open: { opacity: 1, y: "0", maxHeight: "250px" },
+  closed: { opacity: 0, y: "-100%", maxHeight: "0" },
 };
 
 export const Nav: FC<any> = () => {
@@ -51,9 +51,7 @@ export const Nav: FC<any> = () => {
           variants={containerVariants}
         >
           <motion.ul className="flex flex-col gap-4 justify-center items-center w-full py-3">
-            <motion.li
-              className="hover:bg-dark-peach text-off-blue font-mono w-full flex justify-center"
-            >
+            <motion.li className="hover:bg-dark-peach text-off-blue font-mono w-full flex justify-center">
               Show Numbers&nbsp;
               <input
                 name="show-numbers"

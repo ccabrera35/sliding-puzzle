@@ -7,7 +7,7 @@ import { useGame } from "../hooks/useGameConfig";
 
 type TileProps = {
   className?: string;
-  handleTileClick: (index: number) => void;
+  onClick: (index: number) => void;
   height: number;
   imgUrl: string;
   index: number;
@@ -18,7 +18,7 @@ type TileProps = {
 
 export const Tile: FC<TileProps> = ({
   className,
-  handleTileClick,
+  onClick,
   height,
   imgUrl,
   index,
@@ -43,7 +43,7 @@ export const Tile: FC<TileProps> = ({
   return (
     <motion.li
       className={clsx(
-        "grid absolute place-items-center text-xl list-none bg-cream",
+        "grid absolute place-items-center text-3xl list-none bg-cream",
         className
       )}
       style={tileStyle}
@@ -54,7 +54,7 @@ export const Tile: FC<TileProps> = ({
         opacity: tile === tileCount - 1 ? 0 : 1,
       }}
       transition={{ duration: 0.2 }}
-      onClick={() => handleTileClick(index)}
+      onClick={() => onClick(index)}
     >
       {showNumbers && tile + 1}
     </motion.li>

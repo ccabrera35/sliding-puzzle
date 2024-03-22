@@ -1,3 +1,5 @@
+import { randomImages } from "../lib/constants";
+
 export function isSolvable(tiles) {
   let product = 1;
   for (let i = 1, l = tiles.length - 1; i <= l; i++) {
@@ -81,3 +83,11 @@ export const formatTime = (time) => {
   const remainingSeconds = time % 60;
   return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
 };
+
+export function getRandomImage(givenUrl: string) {
+  let newURL = givenUrl;
+  while (newURL === givenUrl) {
+    newURL = randomImages[Math.floor(Math.random() * randomImages.length)];
+  }
+  return newURL;
+}
