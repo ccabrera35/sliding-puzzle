@@ -3,13 +3,15 @@ import { Tile } from "./Tile";
 import { BOARD_SIZE } from "../constants";
 import { canSwap, shuffle, swap, isSolved } from "../utils";
 import { useGame } from "../hooks/useGameConfig";
+import { randomImages } from "../lib/constants";
 
 type BoardProps = {
   imgUrl: string;
+  onChangeImg: (imgUrl: string) => void;
 };
 
-export const Board: FC<BoardProps> = ({ imgUrl }) => {
-  const { showNumbers, size, setSeconds, seconds } = useGame();
+export const Board: FC<BoardProps> = ({ imgUrl, onChangeImg }) => {
+  const { showNumbers, size, setSeconds } = useGame();
   const [tiles, setTiles] = useState([...Array(size * size).keys()]);
   const [isStarted, setIsStarted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -69,6 +71,16 @@ export const Board: FC<BoardProps> = ({ imgUrl }) => {
     setIsPaused(!isPaused);
   };
 
+  const handleGenerateImgClick = () => {
+    const randomImgUrl =
+      randomImages[Math.floor(Math.random() * randomImages.length)];
+    onChangeImg(randomImgUrl);
+    setSeconds(0);
+    shuffleTiles();
+    setIsStarted(false);
+    setIsPaused(false);
+  };
+
   const pieceWidth = Math.round(BOARD_SIZE / size);
   const pieceHeight = Math.round(BOARD_SIZE / size);
   const style = {
@@ -81,8 +93,8 @@ export const Board: FC<BoardProps> = ({ imgUrl }) => {
 
   return (
     <>
-      <div className="border-4 border-salmon shadow-md shadow-salmon-light">
-        <ul style={style} className="relative p-0 bg-salmon-light">
+      <div className="border-4 border-salmon shadow-md shadow-light-salmon">
+        <ul style={style} className="relative p-0 bg-cover bg-light-salmon">
           {tiles.map((tile, index) => (
             <Tile
               className={`${
@@ -101,8 +113,9 @@ export const Board: FC<BoardProps> = ({ imgUrl }) => {
         </ul>
       </div>
       {hasWon && isStarted && <div>Puzzle solved 🧠 🎉</div>}
-      <div className="flex items-center justify-center gap-x-4">
+      <div className="flex self-start justify-center gap-x-4">
         <button
+          className="bg-white border-cyan-500 font-mono border-2 p-1 rounded-lg text-off-blue font-small hover:bg-slate-50"
           onClick={() => {
             if (isStarted) {
               handleShuffleClick();
@@ -114,11 +127,20 @@ export const Board: FC<BoardProps> = ({ imgUrl }) => {
           {buttonText}
         </button>
         {isStarted && (
-          <button value={isPaused} onClick={handlePausedClick}>
+          <button
+            className="bg-white border-cyan-500 font-mono border-2 py-1 px-2 rounded-lg text-off-blue font-small hover:bg-slate-50"
+            onClick={handlePausedClick}
+          >
             {startBtnText}
           </button>
         )}
       </div>
+      <button
+        className="bg-red-50 self-start border-salmon font-mono border-2 py-1 px-2 rounded-lg text-off-blue font-small hover:bg-slate-50"
+        onClick={handleGenerateImgClick}
+      >
+        Generate Image
+      </button>
     </>
   );
 };
