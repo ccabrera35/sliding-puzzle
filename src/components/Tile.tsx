@@ -43,7 +43,7 @@ export const Tile: FC<TileProps> = ({
   return (
     <motion.li
       className={clsx(
-        "grid absolute place-items-center text-xl list-none bg-teal-400",
+        "grid absolute place-items-center text-xl list-none bg-cream",
         className
       )}
       style={tileStyle}
