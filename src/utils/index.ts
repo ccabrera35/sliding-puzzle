@@ -1,6 +1,6 @@
 import { randomImages } from "../lib/constants";
 
-export function isSolvable(tiles) {
+export function isSolvable(tiles: number[]) {
   let product = 1;
   for (let i = 1, l = tiles.length - 1; i <= l; i++) {
     for (let j = i + 1, m = l + 1; j <= m; j++) {
@@ -10,7 +10,7 @@ export function isSolvable(tiles) {
   return Math.round(product) === 1;
 }
 
-export function isSolved(tiles) {
+export function isSolved(tiles: number[]) {
   for (let i = 0, l = tiles.length; i < l; i++) {
     if (tiles[i] !== i) {
       return false;
@@ -27,38 +27,39 @@ export function getMatrixPosition(index: number, size: number) {
   };
 }
 
-export function getVisualPosition(row, col, width, height) {
+export function getVisualPosition(row: number, col: number, width: number, height: number) {
   return {
     x: col * width,
     y: row * height,
   };
 }
 
-export function shuffle(tiles) {
+export function shuffle(tiles: number[]): number[] {
   const shuffledTiles = [
     ...tiles
       .filter((t) => t !== tiles.length - 1)
       .sort(() => Math.random() - 0.5),
     tiles.length - 1,
   ];
+
   return isSolvable(shuffledTiles) && !isSolved(shuffledTiles)
     ? shuffledTiles
     : shuffle(shuffledTiles);
 }
 
-export function canSwap(srcIndex, destIndex, size) {
+export function canSwap(srcIndex: number, destIndex: number, size: number) {
   const { row: srcRow, col: srcCol } = getMatrixPosition(srcIndex, size);
   const { row: destRow, col: destCol } = getMatrixPosition(destIndex, size);
   return Math.abs(srcRow - destRow) + Math.abs(srcCol - destCol) === 1;
 }
 
-export function swap(tiles, src, dest) {
+export function swap(tiles: number[], src: number, dest: number) {
   const tilesResult = [...tiles];
   [tilesResult[src], tilesResult[dest]] = [tilesResult[dest], tilesResult[src]];
   return tilesResult;
 }
 
-export function updateURLParameter(url, param, paramVal) {
+export function updateURLParameter(url: string, param: string, paramVal: string) {
   let newAdditionalURL = "";
   let tempArray = url.split("?");
   const baseURL = tempArray[0];
@@ -78,7 +79,7 @@ export function updateURLParameter(url, param, paramVal) {
   return baseURL + "?" + newAdditionalURL + rows_txt;
 }
 
-export const formatTime = (time) => {
+export const formatTime = (time: number) => {
   const minutes = Math.floor(time / 60);
   const remainingSeconds = time % 60;
   return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
