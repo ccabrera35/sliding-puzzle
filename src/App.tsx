@@ -9,10 +9,10 @@ export const App = () => {
   const [imgUrl, setImgUrl] = useState(initialUrl);
 
   return (
-    <div className="min-h-screen bg-light-yellow">
+    <div className="min-h-screen bg-light-yellow dark:bg-[#424769]" >
       <Nav />
       <div className="grid place-items-center py-4 gap-4 h-full">
-        <p className="bg-white border-cyan-500 font-mono border-4 p-2 rounded-lg mx-1 text-off-blue font-medium hover:bg-slate-50">
+        <p className="bg-white border-[#6aa4f4] text-[#6aa4f4] hover:bg-slate-50 dark:border-[#f29345]  dark:bg-[#424769] font-mono border-2 p-2 rounded-lg mx-1 dark:text-[#d7e6fa] font-medium dark:hover:bg-[#585e80]">
           Time Elapsed: {formatTime(useGame().seconds)}
         </p>
         <Board imgUrl={imgUrl} onChangeImg={setImgUrl} />

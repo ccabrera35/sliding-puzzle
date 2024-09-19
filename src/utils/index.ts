@@ -1,4 +1,6 @@
 import { randomImages } from "../lib/constants";
+import clsx, { ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function isSolvable(tiles: number[]) {
   let product = 1;
@@ -91,4 +93,8 @@ export function getRandomImage(givenUrl: string) {
     newURL = randomImages[Math.floor(Math.random() * randomImages.length)];
   }
   return newURL;
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }

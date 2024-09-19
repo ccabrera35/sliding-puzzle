@@ -1,8 +1,7 @@
 import { FC } from "react";
 import { motion } from "framer-motion";
-import { getMatrixPosition, getVisualPosition } from "../utils";
+import { cn, getMatrixPosition, getVisualPosition } from "../utils";
 import { BOARD_SIZE } from "../constants";
-import clsx from "clsx";
 import { useGame } from "../hooks/useGameConfig";
 
 type TileProps = {
@@ -42,7 +41,7 @@ export const Tile: FC<TileProps> = ({
 
   return (
     <motion.li
-      className={clsx(
+      className={cn(
         "grid absolute place-items-center text-3xl list-none bg-cream",
         className
       )}

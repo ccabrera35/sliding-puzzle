@@ -1,9 +1,8 @@
 import { FC, useEffect, useState } from "react";
 import { Tile } from "./Tile";
 import { BOARD_SIZE } from "../constants";
-import { canSwap, shuffle, swap, isSolved, getRandomImage } from "../utils";
+import { canSwap, shuffle, swap, isSolved, getRandomImage, cn } from "../utils";
 import { useGame } from "../hooks/useGameConfig";
-import clsx from "clsx";
 
 type BoardProps = {
   imgUrl: string;
@@ -92,11 +91,11 @@ export const Board: FC<BoardProps> = ({ imgUrl, onChangeImg }) => {
 
   return (
     <>
-      <div className="border-4 border-salmon shadow-md shadow-light-salmon">
-        <ul style={style} className="relative p-0 bg-cover bg-light-salmon">
+      <div className="border-4 border-salmon shadow-md shadow-light-salmon dark:border-[#f29345] dark:shadow-[#ffc698]">
+        <ul style={style} className="relative p-0 bg-cover bg-light-salmon dark:bg-[#ffd3b0]">
           {tiles.map((tile, index) => (
             <Tile
-              className={clsx(
+              className={cn(
                 isStarted && !isPaused ? "cursor-pointer" : "cursor-not-allowed"
               )}
               onClick={handleTileClick}
@@ -111,10 +110,10 @@ export const Board: FC<BoardProps> = ({ imgUrl, onChangeImg }) => {
           ))}
         </ul>
       </div>
-      {hasWon && isStarted && <div>Puzzle solved 🧠 🎉</div>}
+      {hasWon && isStarted && <div className="text-[#6aa4f4] dark:text-[#d7e6fa]">Puzzle solved 🧠 🎉</div>}
       <div className="flex self-start justify-center gap-x-4">
         <button
-          className="bg-white border-cyan-500 font-mono border-2 p-1 rounded-lg text-off-blue font-small hover:bg-slate-50"
+          className="bg-white border-[#6aa4f4] text-[#6aa4f4] hover:bg-slate-50 dark:border-[#f29345]  dark:bg-[#424769] font-mono border-2 p-1 rounded-lg dark:text-[#d7e6fa] font-small dark:hover:bg-[#585e80]"
           onClick={() => {
             if (isStarted) {
               handleShuffleClick();
@@ -127,7 +126,7 @@ export const Board: FC<BoardProps> = ({ imgUrl, onChangeImg }) => {
         </button>
         {isStarted && (
           <button
-            className="bg-white border-cyan-500 font-mono border-2 py-1 px-2 rounded-lg text-off-blue font-small hover:bg-slate-50"
+            className="bg-white border-[#6aa4f4] text-[#6aa4f4] hover:bg-slate-50 dark:border-[#f29345] dark:bg-[#424769] font-mono border-2 py-1 px-2 rounded-lg dark:text-[#d7e6fa] font-small dark:hover:bg-[#585e80]"
             onClick={handlePausedClick}
           >
             {startBtnText}
@@ -135,7 +134,7 @@ export const Board: FC<BoardProps> = ({ imgUrl, onChangeImg }) => {
         )}
       </div>
       <button
-        className="bg-red-50 self-start border-salmon font-mono border-2 py-1 px-2 rounded-lg text-off-blue font-small hover:bg-slate-50"
+        className="bg-red-100 self-start border-salmon text-[#6aa4f4] hover:bg-slate-50 font-mono border-2 py-1 px-2 rounded-lg dark:bg-red-400 dark:hover:bg-red-400 dark:text-[#d7e6fa] font-small hover:scale-105 duration-300"
         onClick={handleGenerateImgClick}
       >
         Generate Image
@@ -143,3 +142,4 @@ export const Board: FC<BoardProps> = ({ imgUrl, onChangeImg }) => {
     </>
   );
 };
+
