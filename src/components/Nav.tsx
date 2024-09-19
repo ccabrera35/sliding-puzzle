@@ -54,10 +54,10 @@ export const Nav: FC<any> = () => {
           transition={{ ease: "easeInOut", duration: 2, type: "spring" }}
           variants={containerVariants}
         >
-          <div className="mb-6 mt-4 flex items-center justify-center gap-4 leading-none h-12 text-xl hover:bg-[#e8e8e8]/10 rounded-lg w-11/12 cursor-pointer">
+          <a href={import.meta.env.VITE_CANONICAL_URL} className="mb-6 mt-4 flex items-center justify-center gap-4 leading-none h-12 text-xl hover:bg-[#e8e8e8]/10 rounded-lg w-11/12 cursor-pointer">
           <FontAwesomeIcon icon={faHouse}/>
             <span className="text-3xl font-medium font-mono">Home</span>
-            </div>
+            </a>
           <motion.ul className="flex flex-col gap-4 mt-4 justify-center items-center w-11/12 center py-3 bg-[#e8e8e8]/20 rounded-lg">
             <motion.li 
             className="hover:bg-[#6aa4f4] text-peach dark:hover:bg-peach/90 dark:hover:text-white dark:text-[#d7e6fa] w-60 h-12 rounded-md font-mono flex items-center justify-center cursor-pointer">
